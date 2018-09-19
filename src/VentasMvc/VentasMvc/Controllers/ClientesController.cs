@@ -37,17 +37,22 @@ namespace VentasMvc.Controllers
         [HttpPost]
         public ActionResult Create(Cliente cliente)
         {
-            try
+            if (ModelState.IsValid)
             {
                 context.Clientes.Add(cliente);
-                context.SaveChanges();
 
-                return RedirectToAction("Index");
+                try
+                {
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("*", ex.Message);
+                }
             }
-            catch
-            {
-                return View(cliente);
-            }
+
+            return View(cliente);
         }
 
         // GET: Clientes/Edit/5
@@ -62,17 +67,22 @@ namespace VentasMvc.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Cliente cliente)
         {
-            try
+            if (ModelState.IsValid)
             {
-                context.Clientes.Attach(cliente);
-                context.SaveChanges();
+                context.Entry(cliente).State = System.Data.Entity.EntityState.Modified;
 
-                return RedirectToAction("Index");
+                try
+                {
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("*", ex.Message);
+                }
             }
-            catch
-            {
-                return View(cliente);
-            }
+
+            return View(cliente);
         }
 
         // GET: Clientes/Delete/5
@@ -85,19 +95,27 @@ namespace VentasMvc.Controllers
 
         // POST: Clientes/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Cliente cliente)
+        public ActionResult Delete(int id, Cliente model)
         {
-            try
+            var cliente = context.Clientes.Find(id);
+
+            if (cliente != null)
             {
                 context.Clientes.Remove(cliente);
-                context.SaveChanges();
 
-                return RedirectToAction("Index");
+                try
+                {
+                    context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("*", ex.Message);
+                }
             }
-            catch
-            {
-                return View(cliente);
-            }
+
+            return View(model);
         }
     }
 }
