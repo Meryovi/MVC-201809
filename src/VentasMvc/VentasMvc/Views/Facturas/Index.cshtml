@@ -1,0 +1,48 @@
+﻿@model List<VentasMvc.Modelos.Factura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Facturas</h2>
+
+<hr />
+
+<a href="/Facturas/Create" class="btn btn-primary">
+    Crear factura
+</a>
+
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Monto</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var factura in Model)
+        {
+            <tr>
+                <td>@factura.Id</td>
+                <td>@factura.FechaRegistro</td>
+                <td>@factura.Cliente.Nombre</td>
+                <td>@factura.MontoTotal</td>
+                <td>
+                    @Html.ActionLink("Detalle", "Details")
+                    /
+                    @Html.ActionLink("Editar", "Edit")
+                    /
+                    @Html.ActionLink("Eliminar", "Delete")
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

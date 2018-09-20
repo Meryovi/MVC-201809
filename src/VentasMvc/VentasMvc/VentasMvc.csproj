@@ -156,11 +156,15 @@
     <Compile Include="Controllers\ArticuloCategoriasController.cs" />
     <Compile Include="Controllers\ArticulosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ArticulosCrearModel.cs" />
+    <Compile Include="Models\FacturasAgregarArticuloModel.cs" />
+    <Compile Include="Models\FacturasCrearModel.cs" />
+    <Compile Include="Models\FacturasEditarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +218,10 @@
     <Content Include="Views\Clientes\Create.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Facturas\Index.cshtml" />
+    <Content Include="Views\Facturas\Create.cshtml" />
+    <Content Include="Views\Facturas\Edit.cshtml" />
+    <Content Include="Views\Facturas\AgregarArticulo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

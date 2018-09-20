@@ -1,0 +1,27 @@
+﻿@model VentasMvc.Models.FacturasCrearModel
+    
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Crear Factura</h2>
+
+@* Formulario HTML *@
+@using (Html.BeginForm())
+{
+    <div>
+
+        <div>
+            @Html.LabelFor(m => m.ClienteId)
+            @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes)
+            @Html.ValidationMessageFor(m => m.ClienteId)
+        </div>
+
+        <button type="submit">Crear!</button>
+
+    </div>
+}
+
+
+
+

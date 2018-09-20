@@ -1,0 +1,33 @@
+﻿@model VentasMvc.Models.FacturasAgregarArticuloModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Agregar Articulo</h2>
+
+@* Formulario HTML *@
+@using (Html.BeginForm())
+{
+    <div>
+
+        <div>
+            @Html.LabelFor(m => m.ArticuloId)
+            @Html.DropDownListFor(m => m.ArticuloId, Model.ListaArticulos)
+            @Html.ValidationMessageFor(m => m.ArticuloId)
+        </div>
+        
+        <div>
+            @Html.LabelFor(m => m.Cantidad)
+            @Html.EditorFor(m => m.Cantidad)
+            @Html.ValidationMessageFor(m => m.Cantidad)
+        </div>
+
+        <button type="submit">Crear!</button>
+
+    </div>
+}
+
+
+
+
