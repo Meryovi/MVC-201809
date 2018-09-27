@@ -34,11 +34,11 @@
                 <td>@factura.Cliente.Nombre</td>
                 <td>@factura.MontoTotal</td>
                 <td>
-                    @Html.ActionLink("Detalle", "Details")
+                    @Html.ActionLink("Detalle", "Details", new { id = factura.Id })
                     /
-                    @Html.ActionLink("Editar", "Edit")
+                    @Html.ActionLink("Editar", "Edit", new { id = factura.Id })
                     /
-                    @Html.ActionLink("Eliminar", "Delete")
+                    @Html.ActionLink("Eliminar", "Delete", new { id = factura.Id })
                 </td>
             </tr>
         }

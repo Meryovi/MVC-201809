@@ -222,6 +222,9 @@
     <Content Include="Views\Facturas\Create.cshtml" />
     <Content Include="Views\Facturas\Edit.cshtml" />
     <Content Include="Views\Facturas\AgregarArticulo.cshtml" />
+    <Content Include="Views\Facturas\_FormularioCrearEditar.cshtml" />
+    <Content Include="Views\Facturas\Details.cshtml" />
+    <Content Include="Views\Facturas\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

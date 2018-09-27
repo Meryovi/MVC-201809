@@ -1,0 +1,19 @@
+﻿@model VentasMvc.Models.FacturasCrearModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.ClienteId)
+    @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.ClienteId)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.MontoImpuesto)
+    @Html.TextBoxFor(m => m.MontoImpuesto, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MontoImpuesto)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.MontoDescuento)
+    @Html.TextBoxFor(m => m.MontoDescuento, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MontoDescuento)
+</div>

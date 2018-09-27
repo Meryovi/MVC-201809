@@ -23,7 +23,9 @@ namespace VentasMvc.Controllers
         // GET: Facturas/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var factura = context.Facturas.Find(id);
+
+            return View(factura);
         }
 
         // GET: Facturas/Create
@@ -88,7 +90,7 @@ namespace VentasMvc.Controllers
 
                 context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id });
             }
 
             return View(model);
@@ -100,6 +102,7 @@ namespace VentasMvc.Controllers
 
             var articulos = context.Articulos;
             model.ListaArticulos = new SelectList(articulos, "Id", "Nombre");
+            model.Cantidad = 1;
 
             return View(model);
         }
@@ -128,29 +131,45 @@ namespace VentasMvc.Controllers
                 return RedirectToAction("Details", new { id = idFactura });
             }
 
+            var articulos = context.Articulos;
+            model.ListaArticulos = new SelectList(articulos, "Id", "Nombre");
+            
             return View(model);
+        }
+
+        public ActionResult EliminarArticulo(int id)
+        {
+            var detalle = context.FacturaDetalles.Find(id);
+
+            detalle.Factura.MontoTotal -= detalle.Monto;
+            detalle.Factura.MontoNeto -= detalle.Monto;
+
+            context.FacturaDetalles.Remove(detalle);
+            context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = detalle.FacturaId });
         }
 
         // GET: Facturas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var factura = context.Facturas.Find(id);
+
+            return View(factura);
         }
 
         // POST: Facturas/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var factura = context.Facturas.Find(id);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            context.FacturaDetalles.RemoveRange(factura.FacturasDetalles);
+            context.Facturas.Remove(factura);
+
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

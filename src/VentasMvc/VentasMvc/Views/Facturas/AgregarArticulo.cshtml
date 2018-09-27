@@ -5,25 +5,28 @@
 }
 
 <h2>Agregar Articulo</h2>
+<hr />
 
 @* Formulario HTML *@
 @using (Html.BeginForm())
 {
     <div>
 
-        <div>
+        <div class="form-group">
             @Html.LabelFor(m => m.ArticuloId)
-            @Html.DropDownListFor(m => m.ArticuloId, Model.ListaArticulos)
+            @Html.DropDownListFor(m => m.ArticuloId, Model.ListaArticulos, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.ArticuloId)
         </div>
         
-        <div>
+        <div class="form-group">
             @Html.LabelFor(m => m.Cantidad)
-            @Html.EditorFor(m => m.Cantidad)
-            @Html.ValidationMessageFor(m => m.Cantidad)
+            @Html.EditorFor(m => m.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Cantidad, null, new { @class = "text-danger" })
         </div>
 
-        <button type="submit">Crear!</button>
+        <hr />
+        <button type="submit" class="btn btn-primary">Agregar</button>
+        <a class="btn btn-default" href="@Url.Action("Index")">Cancelar</a>
 
     </div>
 }

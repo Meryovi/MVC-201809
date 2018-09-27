@@ -5,19 +5,19 @@
 }
 
 <h2>Crear Factura</h2>
+<hr />
 
 @* Formulario HTML *@
 @using (Html.BeginForm())
 {
     <div>
 
-        <div>
-            @Html.LabelFor(m => m.ClienteId)
-            @Html.DropDownListFor(m => m.ClienteId, Model.ListaClientes)
-            @Html.ValidationMessageFor(m => m.ClienteId)
-        </div>
+        @Html.Partial("_FormularioCrearEditar", Model)
 
-        <button type="submit">Crear!</button>
+        <hr />
+
+        <button type="submit" class="btn btn-primary">Crear</button>
+        <a class="btn btn-default btn-sm" href="@Url.Action("Index")">Cancelar</a>
 
     </div>
 }
