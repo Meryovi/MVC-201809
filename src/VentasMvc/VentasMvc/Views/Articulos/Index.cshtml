@@ -1,70 +1,70 @@
 ﻿@model IEnumerable<VentasMvc.Modelos.Articulo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Articulos";
 }
 
-<h2>Listado de Articulos</h2>
+<h2>Lista de Art&iacute;culos</h2>
+
+<hr />
 
 <p>
-    @Html.ActionLink("Crear Nuevo", "Registrar")
+    @Html.ActionLink("Crear Nuevo", "Registrar", null, new { @class = "btn btn-primary" })
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CantidadExistencia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoriaId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaModificacion)
-        </th>
-        <th></th>
-    </tr>
+<hr />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CantidadExistencia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoriaId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaRegistro)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaModificacion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                Existencia
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                Categor&iacute;a
+            </th>
+            <th>
+                Modificaci&oacute;n
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadExistencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticulosCategoria.Nombre)
+                </td>
+                <td>
+                    @item.FechaModificacion.GetValueOrDefault().ToString("dd/MM/yyyy")
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

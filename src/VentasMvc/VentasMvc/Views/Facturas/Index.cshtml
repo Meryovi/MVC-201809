@@ -1,7 +1,7 @@
 ﻿@model List<VentasMvc.Modelos.Factura>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Facturas";
 }
 
 <h2>Lista de Facturas</h2>
@@ -17,10 +17,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Numero</th>
-            <th>Fecha</th>
+            <th>N&uacute;mero</th>
+            <th>Registro</th>
             <th>Cliente</th>
-            <th>Monto</th>
+            <th>Monto Total</th>
             <th></th>
         </tr>
     </thead>
@@ -30,13 +30,13 @@
         {
             <tr>
                 <td>@factura.Id</td>
-                <td>@factura.FechaRegistro</td>
+                <td>@factura.FechaRegistro.ToString("dd/MM/yyyy hh:mm tt")</td>
                 <td>@factura.Cliente.Nombre</td>
-                <td>@factura.MontoTotal</td>
+                <td>@factura.MontoTotal.ToString("N2")</td>
                 <td>
-                    @Html.ActionLink("Detalle", "Details", new { id = factura.Id })
-                    /
                     @Html.ActionLink("Editar", "Edit", new { id = factura.Id })
+                    /
+                    @Html.ActionLink("Detalle", "Details", new { id = factura.Id })
                     /
                     @Html.ActionLink("Eliminar", "Delete", new { id = factura.Id })
                 </td>

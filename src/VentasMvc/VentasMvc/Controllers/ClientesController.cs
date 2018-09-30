@@ -30,7 +30,9 @@ namespace VentasMvc.Controllers
         // GET: Clientes/Create
         public ActionResult Create()
         {
-            return View();
+            var cliente = new Cliente();
+
+            return View(cliente);
         }
 
         // POST: Clientes/Create
@@ -39,6 +41,7 @@ namespace VentasMvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                cliente.FechaRegistro = DateTime.Now;
                 context.Clientes.Add(cliente);
 
                 try

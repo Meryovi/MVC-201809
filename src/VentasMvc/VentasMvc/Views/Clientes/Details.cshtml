@@ -1,10 +1,10 @@
 ﻿@model VentasMvc.Modelos.Cliente
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle de Clientes";
 }
 
-<h2>Details</h2>
+<h2>Detalle de Cliente</h2>
 
 <div>
     <h4>Cliente</h4>
@@ -53,6 +53,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>

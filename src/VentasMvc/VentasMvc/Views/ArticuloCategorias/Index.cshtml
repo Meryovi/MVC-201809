@@ -1,33 +1,43 @@
 ﻿@model IEnumerable<VentasMvc.Modelos.ArticuloCategoria>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Categorias";
 }
 
-<h2>Index</h2>
+<h2>Lista de Categor&iacute;as</h2>
+
+<hr />
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Registrar Nueva", "Create", null, new { @class = "btn btn-primary" })
 </p>
+
+<hr />
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                    /
+                    @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                    /
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
