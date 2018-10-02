@@ -12,16 +12,133 @@
 {
     <div>
 
-        @Html.Partial("_FormularioCrearEditar", Model)
+        <div class="row">
+            <div class="col-md-6">
+
+                @Html.Partial("_FormularioCrearEditar", Model)
+
+            </div>
+            <div class="col-md-6">
+
+                <table id="tabla-articulos" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Art&iacute;culo</th>
+                            <th>Cantidad</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DropDownList("ArticuloId", Model.ListaArticulos, "Seleccione...", new { @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox("Cantidad", 0, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-default btn-remover-articulo">X</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button id="btn-agregar-articulo" type="button" class="btn btn-sm btn-default">
+                    Agregar Art&iacute;culo
+                </button>
+
+            </div>
+        </div>
+
 
         <hr />
 
-        <button type="submit" class="btn btn-primary">Crear</button>
-        <a class="btn btn-default btn-sm" href="@Url.Action("Index")">Cancelar</a>
+        <button id="btn-crear" type="submit" class="btn btn-primary">Crear</button>
+        <a class="btn btn-default" href="@Url.Action("Index")">Cancelar</a>
 
     </div>
 }
 
+@section scripts {
+    <script>
+        // El $(function () { }) de jQuery se utiliza para asegurar que el codigo
+        // incluido se ejecute cuando la pagina haya cargado completamente.
+        $(function () {
 
+            // Escuchamos cuando el usuario realice "click" en el
+            // elemento con ID "btn-crear"
+            $('#btn-crear').click(onBtnCrearClick);
+
+            $('#btn-agregar-articulo').click(onAgregarArticuloClick);
+
+            $(document).on('click', '.btn-remover-articulo', onRemoverArticuloClick);
+
+            function onBtnCrearClick() {
+                var factura = {
+                    'MontoImpuesto': 0,
+                    'MontoDescuento': 0,
+                    'ClienteId': 0,
+                    'Detalle': [ ]
+                };
+
+                factura.MontoImpuesto = parseFloat($('#MontoImpuesto').val());
+                factura.MontoDescuento = parseFloat($('#MontoDescuento').val());
+                factura.ClienteId = parseInt($('#ClienteId').val(), 10);
+
+                $.each($('#tabla-articulos tbody tr'), function () {
+                    var $tr = $(this);
+
+                    var detalle = {
+                        'ArticuloId': 0,
+                        'Cantidad': 0
+                    };
+
+                    detalle.ArticuloId = parseInt($tr.find('#ArticuloId').val(), 10);
+                    detalle.Cantidad = parseInt($tr.find('#Cantidad').val(), 10);
+
+                    if (isNaN(detalle.ArticuloId)) {
+                        alert('Debe seleccionar un articulo')
+                    }
+
+                    factura.Detalle.push(detalle);
+                });
+
+                var url = window.location.toString();
+
+                $.ajax(url, {
+                    contentType: 'application/json',
+                    data: JSON.stringify(factura),
+                    method: 'POST',
+                    success: function (response) {
+                        if (response.ok == true) {
+                            window.location = response.url;
+                        } else {
+                            alert('Ocurrio un error al procesar la accion');
+                        }
+                    }
+                });
+
+                return false;
+            }
+
+            function onAgregarArticuloClick() {
+                var $fila = $('#tabla-articulos tbody tr').first().clone();
+                $('#tabla-articulos tbody').append($fila);
+            }
+
+            function onRemoverArticuloClick() {
+                // Si es el ultimo/unico registro de la tabla, evitamos que el usuario
+                // pueda eliminarlo...
+                if ($('#tabla-articulos tbody tr').length == 1) {
+                    alert('No puede eliminar el ultimo registro de la tabla...');
+                    return false;
+                }
+
+                $(this).closest('tr').remove();
+            }
+
+        })
+    </script>
+}
 
 

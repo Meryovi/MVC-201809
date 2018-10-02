@@ -16,6 +16,16 @@ namespace VentasMvc.Models
         [Display(Name = "Descuentos")]
         public decimal MontoDescuento { get; set; }
 
+        public List<FacturasDetalleModel> Detalle { get; set; }
+
         public SelectList ListaClientes { get; set; }
+        public SelectList ListaArticulos { get; internal set; }
+    }
+
+    public class FacturasDetalleModel
+    {
+        public int ArticuloId { get; set; }
+
+        public int Cantidad { get; set; }
     }
 }

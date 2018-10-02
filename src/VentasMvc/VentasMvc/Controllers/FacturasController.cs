@@ -38,6 +38,11 @@ namespace VentasMvc.Controllers
             var clientes = context.Clientes.ToList();
             model.ListaClientes = new SelectList(clientes, "Id", "Nombre");
 
+            // Consultamos todos los articulos y los agregamos
+            // a un SelectList.
+            var articulos = context.Articulos.ToList();
+            model.ListaArticulos = new SelectList(articulos, "Id", "Nombre");
+
             return View(model);
         }
 
@@ -50,10 +55,41 @@ namespace VentasMvc.Controllers
                 var factura = new Factura();
 
                 factura.ClienteId = model.ClienteId;
+                factura.MontoDescuento = model.MontoDescuento;
+                factura.MontoImpuesto = model.MontoImpuesto;
                 factura.FechaRegistro = DateTime.Now;
 
                 context.Facturas.Add(factura);
-                context.SaveChanges();
+
+                if (model.Detalle != null && model.Detalle.Count > 0)
+                {
+                    foreach (var detalle in model.Detalle)
+                    {
+                        var articulo = context.Articulos.Find(detalle.ArticuloId);
+
+                        var facturaDetalle = new FacturaDetalle();
+
+                        facturaDetalle.ArticuloId = detalle.ArticuloId;
+                        facturaDetalle.Cantidad = detalle.Cantidad;
+                        facturaDetalle.Monto = detalle.Cantidad * articulo.Precio;
+                        facturaDetalle.Factura = factura;
+
+                        factura.MontoTotal += facturaDetalle.Monto;
+                        factura.MontoNeto += facturaDetalle.Monto;
+
+                        context.FacturaDetalles.Add(facturaDetalle);
+                    }
+                }
+
+                int registros = context.SaveChanges();
+
+                if (Request.IsAjaxRequest())
+                {
+                    bool ok = registros > 0 ? true : false;
+                    var url = Url.Action("Details", new { id = factura.Id });
+
+                    return Json(new { ok, url });
+                }
 
                 return RedirectToAction("Edit", new { id = factura.Id });
             }
